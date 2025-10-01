@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Trader" Height="450" Width="800">
     <Grid>
-        <Frame x:Name="mainwindow" Margin="10,10,10,10">
-
+        <Frame x:Name="StartWindow" Margin="10,10,10,10">
+            
         </Frame>
     </Grid>
 </Window>
