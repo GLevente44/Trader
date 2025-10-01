@@ -89,7 +89,7 @@
             VerticalAlignment="Center"
             Grid.Row="0"
             Grid.Column="1"
-            Width="auto"
+            Width="500"
         />
         <TextBox
             FontSize="15"
@@ -97,7 +97,7 @@
             VerticalAlignment="Center"
             Grid.Row="1"
             Grid.Column="1"
-            Width="auto"
+            Width="500"
         />
         <PasswordBox 
             FontSize="15"
@@ -105,7 +105,7 @@
             VerticalAlignment="Center"
             Grid.Row="2"
             Grid.Column="1"
-            Width="auto"
+            Width="500"
         />
         <PasswordBox 
             FontSize="15"
@@ -113,7 +113,7 @@
             VerticalAlignment="Center"
             Grid.Row="3"
             Grid.Column="1"
-            Width="auto"
+            Width="500"
         />
         <TextBox
             FontSize="15"
@@ -121,7 +121,7 @@
             VerticalAlignment="Center"
             Grid.Row="4"
             Grid.Column="1"
-            Width="auto"
+            Width="500"
         />
 
         <StackPanel Grid.Row="5" Grid.Column="1">
