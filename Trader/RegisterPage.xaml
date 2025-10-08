@@ -91,7 +91,7 @@
             Grid.Column="1"
             Width="500"
         />
-        <TextBox
+        <PasswordBox
             FontSize="15"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
@@ -107,7 +107,7 @@
             Grid.Column="1"
             Width="500"
         />
-        <PasswordBox 
+        <TextBox
             FontSize="15"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
