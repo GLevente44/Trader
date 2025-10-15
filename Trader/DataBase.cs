@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +45,7 @@ namespace Trader
         }
 
 
-        public object logButton_Click(object user)
+        public object LogUser(object user)
         {
             conn.connection.Open ();
 
@@ -61,6 +63,25 @@ namespace Trader
 
             conn.connection.Close ();
             return isRegistered;
+
+        }
+
+        public DataView UserList()
+        {
+            conn.connection.Open ();
+
+            string sql = "SELECT * FROM users";
+            MySqlCommand cmd = new MySqlCommand(sql, conn.connection);
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            DataTable dt = null;
+            adapter.Fill(dt);   
+
+
+            conn.connection.Close ();
+
+            return dt.DefaultView;
         }
     }
 }

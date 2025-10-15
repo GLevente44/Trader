@@ -16,14 +16,15 @@ using System.Windows.Shapes;
 namespace Trader
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AdminPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AdminPage : Page
     {
-        public MainWindow()
+
+        private readonly DataBase db = new DataBase();
+        private readonly MainWindow _mainWindow;
+        public AdminPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            StartWindow.Navigate(new Page(this)); // LoginPage
-        }
-    }
+            userDataGrid.ItemsSource = DataBase.UserList();
 }

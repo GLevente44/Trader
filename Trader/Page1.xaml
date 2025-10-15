@@ -69,6 +69,12 @@
     
 
         <StackPanel Grid.Row="5" Grid.Column="1">
+            <TextBlock Margin="5">
+                
+                <Hyperlink x:Name="regLink" FontSize="15px" FontWeight="Bold" Click="regLink_Click">
+                    
+                    Regisztrálok</Hyperlink>
+            </TextBlock>
             <Button 
             x:Name="regButton"
             Content="Bejelentkezés"

@@ -20,11 +20,31 @@ namespace Trader
     /// </summary>
     public partial class Page1 : Page
     {
-        public Page1()
+
+        private readonly DataBase data = new DataBase();
+        private readonly MainWindow mainWindow;
+
+        public Page1(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
         }
 
-        
+        public void logButton_Click(object sender, RoutedEventArgs e)
+        {
+            var user = new
+            {
+                Name = userNameTextBox.Text,
+                Password = userNameTextBox.Text,
+
+            };
+            MessageBox.Show(data.LogUser(user).ToString());
+
+        }
+
+        private void regLink_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.StartWindow.Navigate(new RegisterPage(mainWindow));
+        }
     }
 }

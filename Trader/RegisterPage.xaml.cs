@@ -21,11 +21,13 @@ namespace Trader
     public partial class RegisterPage : Page
     {
         private readonly DataBase db = new DataBase();
+        private readonly MainWindow _mainWindow;
 
 
-        public RegisterPage()
+        public RegisterPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            _mainWindow = mainWindow;
         }
 
         private void reg_Button(object sender, RoutedEventArgs e)
@@ -42,6 +44,7 @@ namespace Trader
                 };
 
                 MessageBox.Show(db.AddNewUser(user).ToString());
+                _mainWindow.StartWindow.Navigate(new Page1(_mainWindow));
             }
             else
             {
