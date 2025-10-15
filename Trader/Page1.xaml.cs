@@ -25,9 +25,6 @@ namespace Trader
             InitializeComponent();
         }
 
-        private void logButton_Click(object sender, RoutedEventArgs e)
-        {
-                
-        }
+        
     }
 }

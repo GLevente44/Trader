@@ -41,5 +41,26 @@ namespace Trader
                 throw;
             }
         }
+
+
+        public object logButton_Click(object user)
+        {
+            conn.connection.Open ();
+
+            string sql = "SELECT * FROM users WHERE UserName = @username AND Password = @password";
+            MySqlCommand cmd = new MySqlCommand (sql, conn.connection);
+
+            var logUser = user.GetType().GetProperties();
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            object isRegistered = reader.Read() ? new { message = "Regisztrált" } : new { message = "Nem Regisztrált" };
+
+            cmd.Parameters.AddWithValue("@username" , logUser[0].GetValue(user));
+            cmd.Parameters.AddWithValue("@password", logUser[1].GetValue(user));
+
+
+            conn.connection.Close ();
+            return isRegistered;
+        }
     }
 }
