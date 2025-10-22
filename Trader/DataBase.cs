@@ -20,17 +20,20 @@ namespace Trader
             try
             {
                 conn.connection.Open();
+                var newuser = user.GetType().GetProperties();
+
+                string salt = GenerateSalt();
+                string hashedPassword = ComputeHmacSha256(newuser[2].GetValue(user).ToString(), salt);
 
                 string sql = "INSERT INTO `users`(`UserName`, `FullName`, `Password`, `Salt`, `Email`) VALUES (@username,@fullname,@password,@salt,@email)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn.connection);
 
-                var newuser = user.GetType().GetProperties();
 
                 cmd.Parameters.AddWithValue("@username", newuser[0].GetValue(user));
                 cmd.Parameters.AddWithValue("@fullname", newuser[1].GetValue(user));
-                cmd.Parameters.AddWithValue("@password", newuser[2].GetValue(user));
-                cmd.Parameters.AddWithValue("@salt", newuser[3].GetValue(user));
+                cmd.Parameters.AddWithValue("@password", hashedPassword);
+                cmd.Parameters.AddWithValue("@salt", salt);
                 cmd.Parameters.AddWithValue("@email", newuser[4].GetValue(user));
 
                 conn.connection.Close();
@@ -48,22 +51,37 @@ namespace Trader
 
         public object LogUser(object user)
         {
-            conn.connection.Open ();
+            try
+            {
 
-            string sql = "SELECT * FROM users WHERE UserName = @username AND Password = @password";
-            MySqlCommand cmd = new MySqlCommand (sql, conn.connection);
+                conn.connection.Open ();
 
-            var logUser = user.GetType().GetProperties();
+                string sql = "SELECT * FROM users WHERE UserName = @username;";
+                MySqlCommand cmd = new MySqlCommand (sql, conn.connection);
 
-            MySqlDataReader reader = cmd.ExecuteReader();
-            object isRegistered = reader.Read() ? new { message = "Regisztrált" } : new { message = "Nem Regisztrált" };
+                var logUser = user.GetType().GetProperties();
 
-            cmd.Parameters.AddWithValue("@username" , logUser[0].GetValue(user));
-            cmd.Parameters.AddWithValue("@password", logUser[1].GetValue(user));
+                cmd.Parameters.AddWithValue("@username" , logUser[0].GetValue(user));
+                MySqlDataReader reader = cmd.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    string storedHash = reader.GetString(3);
+                    string stroredSalt = reader.GetString(4);
+                    string computeHash = ComputeHmacSha256(logUser[2].GetValue(user).ToString(), storedSalt);
 
-            conn.connection.Close ();
-            return isRegistered;
+                    conn.connection.Close();
+
+                    return ;
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
 

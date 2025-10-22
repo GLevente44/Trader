@@ -38,7 +38,7 @@ namespace Trader
                 Password = userNameTextBox.Text,
 
             };
-            MessageBox.Show(data.LogUser(user).ToString());
+            _ = DataBase.LoginUser(user) ? 
 
         }
 
