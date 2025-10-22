@@ -26,5 +26,8 @@ namespace Trader
         public AdminPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            _mainWindow = mainWindow;
             userDataGrid.ItemsSource = DataBase.UserList();
+        }
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO.Packaging;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,20 +69,53 @@ namespace Trader
 
         public DataView UserList()
         {
-            conn.connection.Open ();
+            try
+            {
+                conn.connection.Open();
 
-            string sql = "SELECT * FROM users";
-            MySqlCommand cmd = new MySqlCommand(sql, conn.connection);
+                string sql = "SELECT * FROM users";
+                MySqlCommand cmd = new MySqlCommand(sql, conn.connection);
 
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            DataTable dt = null;
-            adapter.Fill(dt);   
+                DataTable dt = null;
+                adapter.Fill(dt);
 
 
-            conn.connection.Close ();
+                conn.connection.Close();
 
-            return dt.DefaultView;
+                return dt.DefaultView;
+
+            }
+            catch (System.Exception ex)
+            {
+
+                return null;
+            } 
+
+        }
+
+        public string GenerateSalt()
+        {
+            byte[] salt = new byte[16];
+
+            using (var random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(salt);
+
+
+            }
+
+            return Convert.ToBase64String(salt);
+        }
+
+        public string ComputeHmacSha256(string password, string salt)
+        {
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(salt)))
+            {
+                byte[] hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hash);
+            }
         }
     }
 }
